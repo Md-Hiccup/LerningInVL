@@ -1,9 +1,12 @@
+<!-- For extending the Html file     -->
 {% extends 'blog/base.html' %}
 
 {% block content %}
     <h1>New post</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}         
+        <!-- {{form.as_p}} means form will render them wrapped in <p> tag -->
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}
