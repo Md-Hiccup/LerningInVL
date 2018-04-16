@@ -1,0 +1,41 @@
+{% extends 'crudapp/index.html' %} 
+{% block content %}
+<h1>Welcome to Book Store
+    <a href="/book/new" class="top-menu">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+</h1>
+
+<div class="text-center">
+    <table border=2 class="table">
+        <tr>
+            <th>Serial No.</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        {% for crud in cruds %}
+        <tr>
+            <td>{{crud.pk}}</td>
+            <td>
+                <a href="/book/{{crud.pk}}/">{{crud.name}}</a>
+            </td>
+            <td>{{crud.author}}</td>
+            <td>{{crud.price}}</td>
+            <td>
+                <a class="btn btn-primary" href="/book/{{crud.pk}}/edit/">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-danger" href="/book/delete/{{crud.pk}}/">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </td>
+        </tr>
+        {% endfor%}
+    </table>
+</div>
+{% endblock %}
