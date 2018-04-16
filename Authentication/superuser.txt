@@ -1,0 +1,3 @@
+user: admin1
+email: admin1@admin1.com
+password: test@123
