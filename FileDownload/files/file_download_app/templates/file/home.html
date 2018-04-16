@@ -1,0 +1,36 @@
+{% extends 'file/index.html' %} 
+
+{% block title %} Home {% endblock %} 
+
+{% block content %}
+<div>
+    <h1>Welcome to home page</h1>
+    <br><br>
+    <div>
+        <div class="pull-left">
+            <button class="btn btn-success ">Print</button>
+        </div>
+        <div class="pull-right">
+            <a href="download/excel/"><button class="btn btn-primary">Download in Excel</button></a>
+            <a href="download/pdf/"><button class="btn btn-warning">Download in PDF</button></a>
+        </div>
+    </div>
+    <br><br>
+    <table border=2 class="table" id="mytable">
+        <tr>
+            <th>Serial No.</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Price</th>
+        </tr>
+        {% for c in content %}
+        <tr>
+            <td>{{c.pk}}</td>
+            <td>{{c.name}}</td>
+            <td>{{c.author}}</td>
+            <td>{{c.price}}</td>
+        </tr>
+        {% endfor%}
+    </table>
+</div>
+{% endblock %}
