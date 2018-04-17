@@ -1,0 +1,10 @@
+{% extends 'app1/index.html' %}
+
+{% block content %}
+    <div>
+        <a href="/">Home</a>
+        <h2>{{ book.name }}</h2>
+        <h4>Author: {{ book.author }}</h4>
+        <h4>Price: {{ book.price }}</h4>
+    </div>
+{% endblock%}
