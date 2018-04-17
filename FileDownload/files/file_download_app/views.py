@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+# from django.utils import timezone
 
 import xlwt # for excel 
-
+from io import BytesIO
 from reportlab.pdfgen import canvas # for pdf 
+
+# from reportlab.lib import colors
+# from reportlab.lib.pagesizes import letter, inch
+# from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 from .models import Book
 
@@ -29,7 +34,7 @@ def download_in_excel(request):
  
     # Sheet header, first row
     row_num = 0
- 
+
     font_style = xlwt.XFStyle()
     # headers are bold
     font_style.font.bold = True
@@ -42,7 +47,7 @@ def download_in_excel(request):
         ws.write(row_num, col_num, columns[col_num], font_style)
  
     # Sheet body, remaining rows
-    # font_style = xlwt.XFStyle()
+    font_style = xlwt.XFStyle()
  
     #get your data, from database or from a text file...
     data = Book.objects.all() #dummy method to fetch data.
@@ -56,6 +61,58 @@ def download_in_excel(request):
     wb.save(response)
     return response
 
-def download_in_pdf(request):
-    return HttpResponse("Download file in pdf")
 
+
+def download_in_pdf(request):
+   # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+    buffer = BytesIO()
+    # Create the PDF object, using the BytesIO object as its "file."
+    p = canvas.Canvas(buffer)
+    
+    # data = Book.objects.all()    
+    # p = canvas.Canvas(data, pagesize=letter)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100 , 100 , "Hello World")
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+
+# def download_in_pdf(request):
+#     # response = HttpResponse(content_type='application/pdf')
+#     # response['Content-Disposition'] = 'attachment'
+#     doc = SimpleDocTemplate("file_name.pdf", pagesize=letter)
+
+#     elements = []
+#     data= [['00', '01', '02', '03', '04'],
+#        ['10', '11', '12', '13', '14'],
+#        ['20', '21', '22', '23', '24'],
+#        ['30', '31', '32', '33', '34']]
+#     t=Table(data,5*[0.4*inch], 4*[0.4*inch])
+#     t.setStyle(TableStyle([
+#         ('ALIGN',(1,1),(-2,-2),'RIGHT'),
+#         ('TEXTCOLOR',(1,1),(-2,-2),colors.red),
+#         ('VALIGN',(0,0),(0,-1),'TOP'),
+#         ('TEXTCOLOR',(0,0),(0,-1),colors.blue),
+#         ('ALIGN',(0,-1),(-1,-1),'CENTER'),
+#         ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+#         ('TEXTCOLOR',(0,-1),(-1,-1),colors.green),
+#         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+#         ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+#         ]))
+ 
+#     elements.append(t)
+#     # write the document to disk
+#     doc.build(elements)
