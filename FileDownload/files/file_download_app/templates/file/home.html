@@ -4,7 +4,15 @@
 
 {% block content %}
 <div>
-    <h1>Welcome to home page</h1>
+    <h1>Welcome to home page
+        <a href="/book/new/"><button class="btn btn-lg btn-primary">Add</button></a>
+    </h1>
+    <br><br>
+    <div class="ui-widget">
+        <label for="search-book">Book Name: &nbsp;&nbsp;</label>
+        <input id="search-book">
+        <!-- <a href="/api/get_book_names/"><button>Search</button></a> -->
+    </div>
     <br><br>
     <div>
         <div class="pull-left">
@@ -26,6 +34,8 @@
             <th>Name</th>
             <th>Author</th>
             <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         {% for c in content %}
         <tr>
@@ -33,6 +43,16 @@
             <td>{{c.name}}</td>
             <td>{{c.author}}</td>
             <td>{{c.price}}</td>
+            <td>
+                <a class="btn btn-primary" href="/book/{{c.pk}}/edit/">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-danger" href="/book/delete/{{c.pk}}/">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </td>
         </tr>
         {% endfor%}
     </table>

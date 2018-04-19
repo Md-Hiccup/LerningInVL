@@ -1,12 +1,15 @@
+{% load staticfiles %}
 <html>
 
 <head>
     <title>{% block title %} Index {% endblock %}</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <!-- <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css"> -->
+
+    <!-- Jquery UI -->
+    <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     
-    <!-- <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -17,13 +20,12 @@
             </div>
         </div>
     </div>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#mytable').DataTable();
-        });
-    </script> -->
+
+    <!-- Jquery and Jquery Ui -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Static file /static/js/auto.js -->
+    <script src="{% static "js/auto.js" %}"></script>
 </body>
 
 </html>
