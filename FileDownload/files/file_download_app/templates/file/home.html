@@ -3,6 +3,13 @@
 {% block title %} Home {% endblock %} 
 
 {% block content %}
+<!-- Static file /static/js/auto.js -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script> 
+        var data = "{{ content | safe | escapejs }}";
+    </script>
+    <script src="static/js/auto.js"></script>
+    
 <div>
     <h1>Welcome to home page
         <a href="/book/new/"><button class="btn btn-lg btn-primary">Add</button></a>
@@ -39,7 +46,7 @@
         </tr>
         {% for c in content %}
         <tr>
-            <td>{{c.pk}}</td>
+            <td>{{c.id}}</td>
             <td>{{c.name}}</td>
             <td>{{c.author}}</td>
             <td>{{c.price}}</td>

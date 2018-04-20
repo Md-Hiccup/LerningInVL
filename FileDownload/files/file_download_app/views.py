@@ -14,6 +14,15 @@ import json
 from .models import Book
 from .forms import BookForm
 
+###############   Home Page   #######################
+
+def index(request):
+    content = list(Book.objects.values('name'))
+    # context = json.dumps(content)
+    # content = Book.objects.values()
+    context = { 'content': content }
+    return render(request, 'file/home.html', context)
+    # return HttpResponse("Welcome to home")
 
 ###############   Searching Book   #######################
 def all_books(request):
@@ -39,12 +48,6 @@ def get_book_names(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
-###############   Home Page   #######################
-
-def index(request):
-    content = Book.objects.all()
-    return render(request, 'file/home.html', { 'content': content })
-    # return HttpResponse("Welcome to home")
 
 ###############   For Adding a new Book   #######################
 

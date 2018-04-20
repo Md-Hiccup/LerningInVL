@@ -1,4 +1,11 @@
 $(function () {
+    // window.tdata = JSON.parse('{{content}}')
+    // var data = {{ book.name }}
+    console.log('data : ', (data))
+    const a = []
+    for (var i = 0; i < data.length; i++) {
+        console.log(data)
+    }
     var availableTags = [
         "ActionScript",
         "AppleScript",
