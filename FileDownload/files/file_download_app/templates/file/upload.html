@@ -1,0 +1,14 @@
+{% block content %}
+<div style="text-align:center">
+  <br><br>
+  <form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <button type="submit">Upload File</button>
+  </form>
+
+  <h2><a href="/">Return to home</a></h2>
+
+</div>
+{% endblock %}

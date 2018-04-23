@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 # from django.utils import timezone
 
 #   For Downloading File in Excel and Pdf
@@ -8,45 +8,24 @@ from io import BytesIO
 from reportlab.pdfgen import canvas 
 
 #   For Searching File
-import json
+# import json
+from django.core.serializers import serialize
 
+from .models import Book, Document
+from .forms import BookForm, DocumentForm
 
-from .models import Book
-from .forms import BookForm
 
 ###############   Home Page   #######################
 
 def index(request):
-    content = list(Book.objects.values('name'))
-    # context = json.dumps(content)
-    # content = Book.objects.values()
-    context = { 'content': content }
-    return render(request, 'file/home.html', context)
+    # For displaying data on Home page
+    context = (Book.objects.values())
+
+    # For autocomplete search box
+    data = serialize('json', Book.objects.all())
+
+    return render(request, 'file/home.html', { 'data': data, 'context': context})
     # return HttpResponse("Welcome to home")
-
-###############   Searching Book   #######################
-def all_books(request):
-    books = Book.objects.all()
-    return JsonResponse(books)
-
-def get_book_names(request):
-    # query = request.GET.get('term', '')
-    if request.is_ajax():
-        return HttpResponse("Request is ajax")
-        q = request.GET.get('term', '')
-        books = Book.objects.filter(name__icontains=q)
-        results = []           
-        for b in books:
-            book_json = {}
-            book_json = b.name
-            # basic_user_json['id'] = user.pk
-            # basic_user_json['value'] = user.first_name+" "+  user.last_name
-            results.append(book_json)
-        data = json.dumps(results)
-    else:
-        data = 'fail'
-    mimetype = 'application/json'
-    return HttpResponse(data, mimetype)
 
 
 ###############   For Adding a new Book   #######################
@@ -150,3 +129,40 @@ def download_in_pdf(request):
     buffer.close()
     response.write(pdf)
     return response
+
+############## Download File in Simple Format ##########################
+
+def download_in_file(request):
+    return HttpResponse("Download File in simple format")
+
+############## Download File in CSV forat ##########################
+
+def download_in_csv(request):
+    return HttpResponse("Download File in csv format")
+
+############## Download File in JSON format ##########################
+
+def download_in_json(request):
+    return HttpResponse("Download File in json format")
+
+
+
+
+############# Upload File ##########################################
+
+def uploadfile(request):
+    documents = Document.objects.all()
+    return render(request, 'file/files.html', { 'documents' :  documents }) 
+
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('uploadfile')
+    else:
+        form = DocumentForm()
+    return render(request, 'file/upload.html', {
+        'form': form
+    })
+

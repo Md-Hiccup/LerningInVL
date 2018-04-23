@@ -1,0 +1,36 @@
+{% extends 'file/index.html' %} {% block content %}
+<div>
+  <div id="home-content">
+    <br>
+    <h4>
+      <a href="{% url 'index' %}"> Home </a>
+    </h4>
+    <h1>Upload Files </h1>
+  </div>
+
+  <br><br>
+  <div>
+    
+    <p class="pull-left">
+      <a href="{% url 'model_form_upload' %}" class="btn btn-warning"> Upload File</a>
+    </p>
+  </div>
+  
+  <br><br>
+  
+  <div>
+    <table border=2 class="table table-striped">
+      <tr>
+        <!-- <th>Serial No.</th> -->
+        <th>Name</th>
+        <th>Date</th>
+      </tr>
+      {% for obj in documents %}   
+      <tr>
+        <td><a href="{{ obj.document.url }}">{{ obj.document.name }}</a></td>
+        <td>{{ obj.uploaded_at }}</td>
+      </tr>
+      {% endfor %}
+  </div>
+</div>
+{% endblock %}

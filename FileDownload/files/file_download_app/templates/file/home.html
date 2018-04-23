@@ -4,64 +4,82 @@
 
 {% block content %}
 <!-- Static file /static/js/auto.js -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script> 
-        var data = "{{ content | safe | escapejs }}";
-    </script>
-    <script src="static/js/auto.js"></script>
-    
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script> 
+		var data = "{{ data | safe | escapejs }}";
+	</script>
+	<script src="static/js/auto.js"></script>
+	
 <div>
-    <h1>Welcome to home page
-        <a href="/book/new/"><button class="btn btn-lg btn-primary">Add</button></a>
-    </h1>
-    <br><br>
-    <div class="ui-widget">
-        <label for="search-book">Book Name: &nbsp;&nbsp;</label>
-        <input id="search-book">
-        <!-- <a href="/api/get_book_names/"><button>Search</button></a> -->
-    </div>
-    <br><br>
-    <div>
-        <div class="pull-left">
-            <button class="btn btn-success ">Print</button>
-        </div>
-        <div class="pull-right">
-            <a href="download/excel/">
-                <button class="btn btn-primary" name="pdf">Download in Excel</button>
-            </a>
-            <a href="download/pdf/">
-                <button class="btn btn-warning">Download in PDF</button>
-            </a>
-        </div>
-    </div>
-    <br><br>
-    <table border=2 class="table" id="mytable">
-        <tr>
-            <th>Serial No.</th>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        {% for c in content %}
-        <tr>
-            <td>{{c.id}}</td>
-            <td>{{c.name}}</td>
-            <td>{{c.author}}</td>
-            <td>{{c.price}}</td>
-            <td>
-                <a class="btn btn-primary" href="/book/{{c.pk}}/edit/">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-            </td>
-            <td>
-                <a class="btn btn-danger" href="/book/delete/{{c.pk}}/">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-            </td>
-        </tr>
-        {% endfor%}
-    </table>
+	<div id="home-content">
+	<h1>Welcome to home page
+		<a href="/book/new/"><button class="btn btn-lg btn-primary">Add</button></a>
+	</h1>
+	<br><br>
+	<div class="ui-widget">
+		<label for="search-book">Book Name: &nbsp;&nbsp;</label>
+		<input id="search-book">
+		<!-- <a href="/api/get_book_names/"><button>Search</button></a> -->
+	</div>
+	<br><br>
+	<div>
+		<div class="pull-left">
+			<button class="btn btn-success " id='print'>Print</button>
+			<a href='upload/' class="btn btn-primary">File</a>
+		</div>
+		<div class="pull-right">
+			<a href="download/file/" class="btn btn-default" name="file">
+				Download File
+			</a>
+			<a href="download/csv/" class="btn btn-info" name="csv">
+				Download in CSV
+			</a>
+			<a href="download/json/" class="btn btn-warning" name="json">
+				Download in Json
+			</a>
+			<a href="download/excel/" class="btn btn-primary" name="excel">
+				Download in Excel
+			</a>
+			<a href="download/pdf/" class="btn btn-success" name="pdf">
+				Download in PDF
+			</a>
+		</div>
+	</div>
+	</div>
+	<br><br>
+	<div id="table-data">
+	<table border=2 class="table" id='mytable'>
+		<tr>
+			<th>Serial No.</th>
+			<th>Name</th>
+			<th>Author</th>
+			<th>Price</th>
+			<div class='hide-me'>
+				<th>Edit</th>
+				<th>Delete</th>
+			</div>
+		</tr>
+		{% for c in context %}
+		<tr>
+			<td>{{c.id}}</td>
+			<td>{{c.name}}</td>
+			<td>{{c.author}}</td> 
+			<td>{{c.price}}</td>
+			<div class='hide-me'>
+				<td>
+				<a class="btn btn-primary" href="/book/{{c.pk}}/edit/">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+			</td>
+			<td>
+				<a class="btn btn-danger" href="/book/delete/{{c.pk}}/">
+					<span class="glyphicon glyphicon-trash"></span>
+				</a>
+			</td>
+		</div>
+		</tr>
+		{% endfor%}
+	</table>
+	</div>
 </div>
 {% endblock %}

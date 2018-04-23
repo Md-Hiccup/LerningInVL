@@ -8,4 +8,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+class Document(models.Model):
+    # title = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='documents/')
+    # document = models.FileField(upload_to='documents/%Y/%m/%d/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
