@@ -8,7 +8,7 @@ db.sqlite3
 .gitignore
 .vscode
 /Authentication/auth-env
-myenv/
+Env/
 FileDownload/files/media/
 multiple-file-upload/media/
 FileDownload/files/file_download_app/migrations
