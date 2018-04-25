@@ -15,3 +15,7 @@ class Document(models.Model):
     # document = models.FileField(upload_to='documents/%Y/%m/%d/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+class Photo(models.Model):
+    title = models.CharField(max_length=255, blank=True)
+    file = models.FileField(upload_to='photos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)

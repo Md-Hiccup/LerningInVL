@@ -8,12 +8,17 @@ from io import BytesIO
 from reportlab.pdfgen import canvas 
 
 #   For Searching File
-# import json
+import json
 from django.core.serializers import serialize
 
-from .models import Book, Document
-from .forms import BookForm, DocumentForm
+from .models import Book, Document, Photo 
+from .forms import BookForm, DocumentForm, PhotoForm
 
+from django.core.files.storage import FileSystemStorage
+
+########### File ##########
+import time
+from django.views import View
 
 ###############   Home Page   #######################
 
@@ -130,20 +135,20 @@ def download_in_pdf(request):
     response.write(pdf)
     return response
 
-############## Download File in Simple Format ##########################
+# ############## Download File in Simple Format ##########################
 
-def download_in_file(request):
-    return HttpResponse("Download File in simple format")
+# def download_in_file(request):
+#     return HttpResponse("Download File in simple format")
 
-############## Download File in CSV forat ##########################
+# ############## Download File in CSV forat ##########################
 
-def download_in_csv(request):
-    return HttpResponse("Download File in csv format")
+# def download_in_csv(request):
+#     return HttpResponse("Download File in csv format")
 
-############## Download File in JSON format ##########################
+# ############## Download File in JSON format ##########################
 
-def download_in_json(request):
-    return HttpResponse("Download File in json format")
+# def download_in_json(request):
+#     return HttpResponse("Download File in json format")
 
 
 
@@ -166,3 +171,70 @@ def model_form_upload(request):
         'form': form
     })
 
+def multiple_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'file/multiple.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'file/multiple_upload.html')
+
+
+
+################# FILE #################################
+
+
+class BasicUploadView(View):
+    def get(self, request):
+        photos_list = Photo.objects.all()
+        return render(self.request, 'photos/basic_upload/index.html', {'photos': photos_list})
+
+    def post(self, request):
+        form = PhotoForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+
+
+class ProgressBarUploadView(View):
+    def get(self, request):
+        photos_list = Photo.objects.all()
+        return render(self.request, 'photos/progress_bar_upload/index.html', {'photos': photos_list})
+
+    def post(self, request):
+        time.sleep(1)  # You don't need this line. This is just to delay the process so you can see the progress bar testing locally.
+        form = PhotoForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+
+
+class DragAndDropUploadView(View):
+    def get(self, request):
+        photos_list = Photo.objects.all()
+        return render(self.request, 'photos/drag_and_drop_upload/index.html', {'photos': photos_list})
+
+    def post(self, request):
+        form = PhotoForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+
+
+def clear_database(request):
+    for photo in Photo.objects.all():
+        photo.file.delete()
+        photo.delete()
+    return redirect(request.POST.get('next'))

@@ -9,3 +9,6 @@ db.sqlite3
 .vscode
 /Authentication/auth-env
 myenv/
+FileDownload/files/media/
+multiple-file-upload/media/
+FileDownload/files/file_download_app/migrations

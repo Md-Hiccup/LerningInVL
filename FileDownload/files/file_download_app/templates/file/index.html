@@ -13,9 +13,10 @@
 </head>
 
 <body>
+    {% include 'file/header.html' %}
     <div class="container">
         <div class="row">
-            <div class="text-center">
+            <div>
                 {% block content %} {% endblock %}
             </div>
         </div>
@@ -23,9 +24,9 @@
 
     <!-- Jquery and Jquery Ui -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- Static file /static/js/auto.js -->
-    <!-- <script src="{% static "js/auto.js" %}"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {% block javascript %}
+    {% endblock %}
 </body>
 
 </html>
