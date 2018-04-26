@@ -11,9 +11,9 @@ class File(models.Model):
         return filename
 
 class User(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4 )
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4 )
     name = models.CharField(max_length=255)
-    mobile = models.IntegerField()
+    mobile = models.DecimalField(max_digits=12, decimal_places=0)
     email = models.CharField(max_length=255)
 
     def __str__(self):

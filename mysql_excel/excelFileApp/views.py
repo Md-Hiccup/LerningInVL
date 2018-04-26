@@ -50,26 +50,31 @@ class FileUploadView(View):
 
         row = xl_sheet.row(0)  # 1st row
         # Print 1st row values and types
-        # print(row)
-        from xlrd.sheet import ctype_text   
+        print(row)
+        # from xlrd.sheet import ctype_text   
 
-        print('(Column #) type:value')
-        for idx, cell_obj in enumerate(row):
-            cell_type_str = ctype_text.get(cell_obj.ctype, 'unknown type')
-            print('(%s) %s %s' % (idx, cell_type_str, cell_obj.value))
+        # print('(Column #) type:value')
+        # for idx, cell_obj in enumerate(row):
+        #     cell_type_str = ctype_text.get(cell_obj.ctype, 'unknown type')
+        #     print('(%s) %s %s' % (idx, cell_type_str, cell_obj.value))
 
         # Print all values, iterating through rows and columns
         num_cols = xl_sheet.ncols   # Number of columns
         num_rows = xl_sheet.nrows   # Number of rows
-        values = []
-        print(num_rows, num_cols)
+        values = {}
+        # print(num_rows, num_cols) 
         for row_idx in range(1, num_rows):    # Iterate through rows
             print ('-'*40)
             print ('Row: %s' % row_idx)   # Print row number
             for col_idx in range(0, num_cols):  # Iterate through columns
                 cell_obj = xl_sheet.cell(row_idx, col_idx)  # Get cell object by row, col
                 print ('Column: [%s] cell_obj: [%s]' % (col_idx, cell_obj))
-                # user = User.objects.create(name)
+                values[col_idx] = cell_obj.value
+                # user = User.objects.create(name=cell_obj)
+            # print(values)
+            User.objects.create(name = values[0], mobile=values[1], email=values[2])
+            # values.save()
+
 
 
 ############ For deleting all file from DB ##################

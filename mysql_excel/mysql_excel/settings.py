@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'mysql_excel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_excel',
+        'NAME': 'django_xls',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
