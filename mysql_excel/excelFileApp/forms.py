@@ -1,7 +1,7 @@
 from django import forms
-from .models import Files
+from .models import File
 
 class FileForm(forms.ModelForm):
     class Meta:
-        model = Files
+        model = File
         fields = ('file',)

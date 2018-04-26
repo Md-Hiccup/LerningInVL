@@ -12,3 +12,5 @@ Env/
 FileDownload/files/media/
 multiple-file-upload/media/
 FileDownload/files/file_download_app/migrations
+mysql_excel/media
+mysql_excel/excelFileApp/migrations

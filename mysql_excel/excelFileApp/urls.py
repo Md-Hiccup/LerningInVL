@@ -8,6 +8,7 @@ app_name = 'files_app'
 urlpatterns = [
     path('', views.index, name='index'),
     path('files/file-upload/', views.FileUploadView.as_view(), name='file_upload'),
+    path('clear/', views.clear_database, name='clear_database'),
 ]
 
 if settings.DEBUG:

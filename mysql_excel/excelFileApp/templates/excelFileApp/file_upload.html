@@ -16,19 +16,29 @@
 
 {% block content %}
   <div style="margin-bottom: 20px;">
-    <button type="button" class="btn btn-primary js-upload-photos" style="text-align:left">
-      <span class="glyphicon glyphicon-cloud-upload"></span> Upload files
-    </button>
+    <form method="post" action="{% url 'files_app:clear_database' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <button type="submit" class="btn btn-danger pull-right">
+        <span class="glyphicon glyphicon-trash"></span> Clear Database
+      </button>
+    </form>
+    
+    <!-- <label>Title</label> -->
+    <!-- <input id='title' type="title" name="title" value=/> -->
     <input id="fileupload" type="file" name="file" multiple
            style="display: none;"
            data-url="{% url 'files_app:file_upload' %}"
            data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+    <button type="button" class="btn btn-primary js-upload-photos" style="text-align:left">
+      <span class="glyphicon glyphicon-cloud-upload"></span> Upload files
+    </button>
   </div>
 
   <table id="gallery" class="table table-bordered">
     <thead>
       <tr>
-        <th>Photo</th>
+        <th>Excel Files</th>
       </tr>
     </thead>
     <tbody>

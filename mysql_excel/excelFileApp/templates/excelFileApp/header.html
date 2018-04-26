@@ -7,13 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'files_app:file_upload' %}">Home</a>
+            <a class="navbar-brand" href="{% url 'files_app:index' %}">Home</a>
         </div>
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav">
-                <!-- <li{% if '/files/' in request.path %} class="active" {% endif %}>
+                <li{% if '/files/' in request.path %} class="active" {% endif %}>
                     <a href="{% url 'files_app:file_upload' %}">Files</a>
-                    </li> -->
+                </li>
             </ul>
         </div>
     </div>
