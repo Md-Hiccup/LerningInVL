@@ -6,7 +6,7 @@ from . import views
 app_name = 'files_app'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     path('files/file-upload/', views.FileUploadView.as_view(), name='file_upload'),
     path('clear/', views.clear_database, name='clear_database'),
 ]

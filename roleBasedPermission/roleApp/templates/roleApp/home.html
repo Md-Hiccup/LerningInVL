@@ -1,0 +1,17 @@
+<!-- templates/home.html -->
+{% extends 'roleApp/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div>
+    {% if user.is_authenticated %}
+        <h3>Welcome {{ user }}</h3>
+        <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+        <h3>Home Page ..</h3>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'signup' %}">signup</a>
+    {% endif %}
+</div>
+{% endblock %}
