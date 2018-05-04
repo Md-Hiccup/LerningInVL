@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+    <h2>Welcome. {{ user.username }}</h2>
+    These are your active games: 
+    <ul>
+        {% for g in games %}
+            <li>Game {{ g.id }}: {{ g.first_player }} vs {{ g.second_player }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'player_new_invitation' %}">
+        Invite another user to play a game
+    </a>
+{% endblock %}
